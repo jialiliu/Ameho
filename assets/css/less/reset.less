@@ -1,0 +1,41 @@
+// main: screen.less
+
+/* === Reset === */
+
+* {
+    margin: 0;
+    padding: 0;
+    border: none;
+    box-sizing: border-box;
+	text-shadow: 0px 0px 1px rgba(0,0,0,0.05);
+}
+
+body {
+    position: relative;
+    overflow-x: hidden;
+    font-family: "Lato", "Hiragino Sans GB", "Hiragino Sans GB W3", "Microsoft YaHei",sans-serif;
+    color: @primary_text;
+    font-size: 1em;
+    background-color: #E5E4DB;
+    min-height: 100%;
+}
+.cf {
+    zoom: 1;
+    
+    &:after, &:before {
+	    content: "";
+		display: table;
+    }
+    &:after {
+	    clear: both;
+    }
+}
+
+h1, h2, h3, h4, h5, h6 {
+    line-height: 1;
+}
+a {
+    color: #4a4a4a;
+	text-decoration: none;
+    cursor: pointer;
+}
