@@ -1,7 +1,5 @@
 ## Ameho - A personal Ghost theme
 
-<hr />
-
 ### Description
 
 Refacting the original work of [Yabu No Naka](http://themeforest.net/item/yabu-no-naka-a-responsive-ghost-theme/6813025). **Yabu no Naka** is a [ghost](http://ghost.org) theme designed and coded by Hermit.
@@ -18,13 +16,41 @@ Refacting the original work of [Yabu No Naka](http://themeforest.net/item/yabu-n
 
 <h3 id="index">Index of Contents</h3>
 
-1. [How to install](#install)
-2. [HTML Structure](#html-structure)
-3. [CSS Structure](#css-structure)
-4. [Javascript](#javascript)
-5. [Theme Settings](#settings)
-6. [Customization](#customize)
-7. [Sources and Credits](#credits)
+1. [Get Start](#start)
+2. [How to install](#install)
+3. [HTML Structure](#html-structure)
+4. [CSS Structure](#css-structure)
+5. [Javascript](#javascript)
+6. [Theme Settings](#settings)
+7. [Customization](#customize)
+8. [Sources and Credits](#credits)
+
+<br />
+
+<hr />
+
+<h3 id="start">Get Start</h3>
+
+#### 1. Prepare for requirements
+
+Install [Nodejs](https://nodejs.org/).
+
+Install **Gulp**:
+```shell
+npm install gulp -d
+cd theme_path
+npm install -d
+```
+
+Install gscan
+```shell
+npm install gscan -gd
+```
+
+#### 2. Run gulp default watch task:
+```shell
+gulp
+```
 
 <br />
 
