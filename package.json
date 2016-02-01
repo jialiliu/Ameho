@@ -1,4 +1,37 @@
 {
-  "name": "Yabu no Naka",
-  "version": "1.1.1"
+  "name": "Ameho",
+  "version": "1.0.0",
+  "description": "A Ghost theme refacting by @syhily",
+  "author": "@syhily",
+  "homepage": "https://yufan.me",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:syhily/Ameho.git"
+  },
+  "license": "GPL-3.0",
+  "devDependencies": {
+    "chalk": "^1.1.1",
+    "dateformat": "^1.0.12",
+    "del": "^2.2.0",
+    "gulp": "^3.9.0",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-compass": "^2.1.0",
+    "gulp-concat": "^2.6.0",
+    "gulp-csscomb": "^3.0.6",
+    "gulp-cssnano": "^2.1.0",
+    "gulp-image-resize": "^0.7.1",
+    "gulp-imagemin": "^2.4.0",
+    "gulp-jshint": "^2.0.0",
+    "gulp-plumber": "^1.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^2.1.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-strip-debug": "^1.1.0",
+    "gulp-uglify": "^1.5.1",
+    "gulp-zip": "^3.1.0",
+    "gulp.spritesmith": "^6.1.0",
+    "imagemin-pngquant": "^4.2.0",
+    "jshint": "^2.9.1",
+    "jshint-stylish": "^2.1.0"
+  }
 }

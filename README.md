@@ -1,14 +1,20 @@
 ## Ameho - A personal Ghost theme
 
+<hr />
+
 ### Description
 
-Refacting the original work of [Yabu No Naka](http://themeforest.net/item/yabu-no-naka-a-responsive-ghost-theme/6813025). **Yabu no Naka** is a [ghost](http://ghost.org) theme designed and coded by Art Chen (a.k.a Hermit) from [Rakugaki](http://rakugaki.me).
+Refacting the original work of [Yabu No Naka](http://themeforest.net/item/yabu-no-naka-a-responsive-ghost-theme/6813025). **Yabu no Naka** is a [ghost](http://ghost.org) theme designed and coded by Hermit.
 
 * 100% Responsive and ready for Retina
 * Customizable sidebar menu and site descriptions
 * 10+ social network icons
 * Ghost 0.7 compatible
 * Google Fonts
+
+<br />
+
+<hr />
 
 <h3 id="index">Index of Contents</h3>
 
@@ -49,7 +55,7 @@ The general steps of ghost theme installation:
 
 <h3 id="html-structure">HTML Structure</h3>
 
-Here is the basic HTML structure of **Yabu no Naka**:
+Here is the basic HTML structure of **Ameho**:
 
     <body>
 
@@ -143,7 +149,7 @@ Of course, feel free to edit `all.js` :)
 
 <h3 id="settings">Theme Settings</h3>
 
-All the theme settings of **Yabu no Naka** are enabled using a function `Ysettings` located in <code>/yabu/assets/js/all.js</code>.
+All the theme settings of **Ameho** are enabled using a function `Ysettings` located in <code>/yabu/assets/js/all.js</code>.
 
 The options locate in `js/options.json`. You are going to modify this json file to set your options.
 
@@ -235,7 +241,7 @@ Just to demonstrate how should a valid theme setting look like.
 
 <h3 id="customize">Customization</h3>
 
-If you would like to make some changes to **Yabu no Naka**, especially the CSS styling, you can either create a new custom CSS file, or edit the original style.css directly. If you choose to create a new stylesheet, for example `custom.css`, you may link it to the page by adding the following line of code right below the `screen.css`:
+If you would like to make some changes to **Ameho**, especially the CSS styling, you can either create a new custom CSS file, or edit the original style.css directly. If you choose to create a new stylesheet, for example `custom.css`, you may link it to the page by adding the following line of code right below the `screen.css`:
 
     ...
 
