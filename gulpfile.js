@@ -64,7 +64,7 @@ var Utils = (function() {
         "info": "green"
     };
     // Define working path
-    // Usage: Utils.get_dev_css_path(); Utils.get_dev_css();
+    // Usage: Utils.get_dev_css_path(); Utils.get_dev_css(); Utils.get_dev_css("filename");
     for (var path in PATHS) {
         (function(_path) {
             for (var type in PATHS[_path]) {
@@ -72,8 +72,8 @@ var Utils = (function() {
                     utils["get_" + _path + "_" + _type + "_path"] = function() {
                         return PATHS[_path][_type];
                     };
-                    utils["get_" + _path + "_" + _type] = function() {
-                        return PATHS[_path][_type] + "**/*";
+                    utils["get_" + _path + "_" + _type] = function(file) {
+                        return PATHS[_path][_type] + (file || "**/*");
                     };
                 })(type);
             }
@@ -92,12 +92,14 @@ var Utils = (function() {
 
 /**
  * Utils test, useless.
+ * $ gulp test
  */
-gulp.task('log', function() {
+gulp.task('test', function() {
     Utils.debug("This is a debug message.");
     Utils.error("This is a error message.");
     Utils.info("This is a info message.   " + Utils.get_dev_css_path());
     Utils.warn(Utils.get_dev_css());
+    Utils.warn(Utils.get_dev_img("**/*.png"));
 });
 
 /**
@@ -110,6 +112,22 @@ gulp.task('build', function() {
     });
     // TODO - Main build work
 });
+
+/**
+ * Compress theme files, auto concat timestamp as distribute file name.
+ * $ gulp zip
+ */
+gulp.task('zip', function() {
+    var now = new Date();
+    del(['zipped/*.zip'], function() {
+        Utils.error("[clean] Delete old files");
+    });
+    Utils.warn("[Pack] Generate final package");
+    gulp.src('build/**/*')
+        .pipe(zip(package.name + '-' + dateFormat(now, 'yyyy-mmmm-dS-h-MMTT') + '.zip'))
+        .pipe(gulp.dest('zipped/'))
+});
+
 
 /**
  * Clean working dir & accept alternative options
@@ -125,6 +143,8 @@ gulp.task('clean', function(cb) {
  */
 gulp.task('sass', function() {
     // Dev version, add sourcemap for better edit on Chrome develop tools
+    Utils.debug("Sass path: " + Utils.get_dev_sass_path())
+    Utils.debug("Distribute Path: " + Utils.get_dist_css_path());
     gulp.src(Utils.get_dev_sass())
         .pipe(plumber())
         .pipe(sourcemaps.init())
@@ -132,9 +152,7 @@ gulp.task('sass', function() {
         .pipe(concat('style.css'))
         .pipe(gulp.dest(Utils.get_dev_css_path()))
         .pipe(minifycss())
-        .pipe(sourcemaps.write({
-            sourceRoot: '/styles/sass'
-        }))
+        .pipe(sourcemaps.write())
         .pipe(rename('dev.min.css'))
         .pipe(gulp.dest(Utils.get_dist_css_path()));
 
@@ -151,3 +169,106 @@ gulp.task('sass', function() {
         .pipe(rename('all.min.css'))
         .pipe(gulp.dest(Utils.get_dist_css_path()));
 });
+
+/**
+ * Jshint
+ * $ gulp hint
+ */
+gulp.task('lint', function() {
+    return gulp.src(Utils.get_dev_js())
+        .pipe(jshint())
+        .pipe(jshint.reporter('default'));
+});
+
+/**
+ * JavaScript resolver
+ * $ gulp scripts
+ */
+gulp.task('scripts', function() {
+    // Minify and copy all JavaScript (except vendor scripts)
+    // with sourcemaps all the way down
+    gulp.src(Utils.get_dev_js())
+        .pipe(plumber())
+        .pipe(sourcemaps.init())
+        .pipe(jshint())
+        .pipe(jshint.reporter(stylish))
+        .pipe(uglify({
+            compress: {
+                drop_console: true
+            }
+        }))
+        .pipe(concat('all.min.js'))
+        .pipe(gulp.dest(Utils.get_dist_js_path()))
+        .pipe(rename('dev.min.js'))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(Utils.get_dist_js_path()));
+
+    // TODO - Requirejs integeration
+});
+
+/**
+ * Image compress
+ * $ gulp image
+ */
+gulp.task('image', function() {
+    return gulp.src(Utils.get_dev_img("**/*.png"))
+        .pipe(imagemin({
+            progressive: true,
+            svgoPlugins: [{
+                removeViewBox: false
+            }],
+            use: [pngquant()]
+        }))
+        .pipe(gulp.dest(Utils.get_dist_img_path()));
+});
+
+/**
+ * Auto generate css sprites & @2x retina sprites
+ * $ gulp sprite
+ * @see https://github.com/Ensighten/spritesmith
+ */
+gulp.task('sprite', ['retinasprite', 'standardsprite'], function() {
+    del([Utils.get_dev_img("sprite*.png")], function() {
+        Utils.error("[Clean] Delete old css sprites")
+    });
+});
+
+/**
+ * Retina(@2x) sprites generation
+ */
+gulp.task('retinasprite', function(cb) {
+    var spriteData = gulp.src(Utils.get_dev_img("sprites/*.png")).pipe(spritesmith({
+        imgName: 'sprite@2x.png',
+        cssName: '_sprite.scss',
+        algorithm: 'binary-tree',
+        padding: 10 // Recommend 10px whitespace
+    }));
+    spriteData.img.pipe(gulp.dest(Utils.get_dev_img_path())); // 输出合成图片
+    spriteData.css.pipe(gulp.dest(Utils.get_dev_sass_path())).on('end', cb)
+    Utils.info("[Sprites] Generated retina sprite");
+});
+
+/**
+ * Normal(@1x) sprites generation
+ */
+gulp.task('standardsprite', ['retinasprite'], function(cb) {
+    Utils.info("[Sprites] Generated normal sprite");
+    gulp.src(Utils.get_dev_img("sprite@2x.png")).pipe(imageResize({
+        width: '50%'
+    }))
+    .pipe(rename('sprite.png'))
+    .pipe(gulp.dest(Utils.get_dev_img_path())).on('end', cb)
+})
+
+/**
+ * Watch file change
+ * $ gulp watch
+ */
+ gulp.task('watch', function() {
+    Utils.warn("[Listen] gulp auto compile initialization, workflow for frontend.");
+    gulp.watch(Utils.get_dev_js(), ['scripts']);
+    gulp.watch(Utils.get_dev_sass(), ['sass']);
+});
+
+gulp.task('default', ['watch', 'scripts']);
+gulp.task('watch:base', ['watch']);

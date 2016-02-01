@@ -35,6 +35,11 @@ Refacting the original work of [Yabu No Naka](http://themeforest.net/item/yabu-n
 
 Install [Nodejs](https://nodejs.org/).
 
+Install Jshint
+```shell
+npm install jshint -gd
+```
+
 Install **Gulp**:
 ```shell
 npm install gulp -d
@@ -51,6 +56,8 @@ npm install gscan -gd
 ```shell
 gulp
 ```
+
+[Back to index](#index)
 
 <br />
 
